@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
+}
+
+@font-face {
+    font-family: Orbitron;
+    font-style: normal;
+    font-display: swap;
+    src: url("/Orbitron-VariableFont_wght.ttf") format("woff2");
+}
