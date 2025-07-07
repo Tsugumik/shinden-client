@@ -7,3 +7,8 @@ export type Anime = {
     episodes: string,
     description: string,
 }
+
+export type User = {
+    name: string,
+    image_url: string,
+}

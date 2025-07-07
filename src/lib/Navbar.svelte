@@ -9,7 +9,8 @@
     </div>
     <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
-            <li><a href="#">Konto</a></li>
+            <li>
+                <a href="/account">Konto</a></li>
             <li><a href="#">Ustawienia</a></li>
         </ul>
     </div>
