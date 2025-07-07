@@ -7,7 +7,7 @@
 
 <div class="h-screen flex flex-col">
     <Navbar/>
-    <div class="flex-1">
+    <div class="flex-1 overflow-y-auto">
         {@render children()}
     </div>
 </div>
