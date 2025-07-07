@@ -1,6 +1,7 @@
 <script lang="ts">
     import "../app.css";
     import Navbar from "$lib/Navbar.svelte";
+    import {invoke} from "@tauri-apps/api/core";
     let { children } = $props();
 </script>
 

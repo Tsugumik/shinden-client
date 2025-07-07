@@ -1,4 +1,32 @@
-<script>
+<script lang="ts">
+    import {globalStates, LoadingState, params} from "$lib/global.svelte.js";
+    import {onMount} from "svelte";
+    import {invoke} from "@tauri-apps/api/core";
+    import {log, LogLevel} from "$lib/logs/logs.svelte";
+    import {goto} from "$app/navigation";
+
+
+    let animeName: string = $state("");
+
+    globalStates.loadingState = LoadingState.LOADING;
+
+    onMount(async () => {
+        try {
+            log(LogLevel.INFO, "Testing connection to http://shinden.pl");
+            await invoke("test_connection");
+            globalStates.loadingState = LoadingState.OK;
+            log(LogLevel.SUCCESS, "Connection to http://shinden.pl established");
+        } catch (error) {
+            globalStates.loadingState = LoadingState.ERROR;
+            log(LogLevel.ERROR, "Error connection to http://shinden.pl");
+        }
+    });
+
+    function handleButton(event: Event) {
+        event.preventDefault();
+        goto(`/search/${animeName}`);
+    }
+
 </script>
 
 <div class="hero bg-base-200 min-h-full">
@@ -14,7 +42,7 @@
                 Na co masz dziś ochotę?
             </p>
 
-            <div class="join w-full">
+            <form class="join w-full" onsubmit={handleButton}>
                 <label class="input join-item w-full">
                     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g
@@ -28,12 +56,10 @@
                             <path d="m21 21-4.3-4.3"></path>
                         </g>
                     </svg>
-                    <input type="search" required />
+                    <input type="search" required bind:value={animeName}/>
                 </label>
                 <button class="btn btn-primary join-item">Szukaj</button>
-            </div>
-
-
+            </form>
         </div>
     </div>
 </div>
