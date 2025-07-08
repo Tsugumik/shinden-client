@@ -9,6 +9,6 @@ export type Anime = {
 }
 
 export type User = {
-    name: string,
-    image_url: string,
+    name: string | null,
+    image_url: string | null,
 }

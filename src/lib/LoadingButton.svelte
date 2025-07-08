@@ -21,6 +21,7 @@
 
     $effect(()=> {
         if(globalStates.loadingState === LoadingState.LOADING) {
+            operationTime = 0;
             startTime = performance.now();
         } else {
             endTime = performance.now();
@@ -51,7 +52,7 @@
         {#if operationTime > 0}
             {operationTime.toFixed()}ms
         {:else}
-            ...
+            <span class="loading loading-dots loading-md"></span>
         {/if}
 
     </div>

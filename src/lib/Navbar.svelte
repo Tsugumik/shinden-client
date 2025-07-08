@@ -1,5 +1,6 @@
 <script lang="ts">
     import LoadingButton from "$lib/LoadingButton.svelte";
+    import AccountButton from "$lib/AccountButton.svelte";
 </script>
 
 <header data-tauri-drag-region class="navbar shadow-sm bg-base-300 h-3 gap-4">
@@ -8,10 +9,9 @@
         <LoadingButton />
     </div>
     <div class="flex-none">
-        <ul class="menu menu-horizontal px-1">
-            <li>
-                <a href="/account">Konto</a></li>
-            <li><a href="#">Ustawienia</a></li>
+        <ul class="menu menu-horizontal px-1 flex items-center">
+            <li><AccountButton/></li>
+            <li><a href="#">Informacje</a></li>
         </ul>
     </div>
 

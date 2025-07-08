@@ -19,26 +19,41 @@
     }
 </script>
 
-
-
 <div class="hero bg-base-200 h-full">
-    <div class="hero-content flex-col">
-        <div class="text-center lg:text-left">
-            <h1 class="text-5xl font-bold">Logowanie</h1>
-            <p class="py-6">
-                Zalogowanie się na konto w serwisie shinden.pl umożliwi ci oglądanie niedostępnych publicznie anime.
-            </p>
+    {#if !globalStates.user.name}
+        <div class="hero-content flex-col">
+            <div class="text-center lg:text-left">
+                <h1 class="text-5xl font-bold">Logowanie</h1>
+                <p class="py-6">
+                    Zalogowanie się na konto w serwisie shinden.pl umożliwi ci oglądanie niedostępnych publicznie anime.
+                </p>
+            </div>
+            <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                <form class="card-body" onsubmit={handleLogin}>
+                    <fieldset class="fieldset">
+                        <label class="label">Email</label>
+                        <input type="email" class="input" placeholder="Email" required bind:value={email} />
+                        <label class="label">Hasło</label>
+                        <input type="password" class="input" placeholder="Hasło" required bind:value={password} />
+                        <button class="btn btn-neutral mt-4">Zaloguj się</button>
+                    </fieldset>
+                </form>
+            </div>
         </div>
-        <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <form class="card-body" onsubmit={handleLogin}>
-                <fieldset class="fieldset">
-                    <label class="label">Email</label>
-                    <input type="email" class="input" placeholder="Email" required bind:value={email} />
-                    <label class="label">Hasło</label>
-                    <input type="password" class="input" placeholder="Hasło" required bind:value={password} />
-                    <button class="btn btn-neutral mt-4">Zaloguj się</button>
-                </fieldset>
-            </form>
-        </div>
-    </div>
+        {:else}
+            <div class="hero-content flex-col">
+                <img
+                        src={globalStates.user.image_url}
+                        class="max-w-sm rounded-lg shadow-2xl"
+                        alt="Avatar"
+                />
+                <div class="text-center">
+                    <h1 class="text-5xl font-bold">Zalogowano jako {globalStates.user.name}</h1>
+                    <p class="py-6">
+                        W razie problemów z dostępem do listy odcinków - zaloguj się ponownie.
+                    </p>
+                    <button class="btn btn-neutral">Wyloguj się</button>
+                </div>
+            </div>
+    {/if}
 </div>
