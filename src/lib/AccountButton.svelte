@@ -1,22 +1,13 @@
 <script lang="ts">
     import {invoke} from "@tauri-apps/api/core";
-    import {globalStates} from "$lib/global.svelte";
+    import {getUserData, globalStates} from "$lib/global.svelte";
     import {onMount} from "svelte";
 
     let loading: boolean = $state(false);
 
     async function getLogin() {
         loading = true;
-        const username = await invoke("get_user_name");
-        const user_profile_image_url = await invoke("get_user_profile_image");
-
-        if(user_profile_image_url && username) {
-            globalStates.user.name = username as string;
-            globalStates.user.image_url = user_profile_image_url as string;
-
-            console.log(user_profile_image_url, username);
-        }
-
+        await getUserData();
         loading = false;
     }
 

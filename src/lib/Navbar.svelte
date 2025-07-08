@@ -11,7 +11,7 @@
     <div class="flex-none">
         <ul class="menu menu-horizontal px-1 flex items-center">
             <li><AccountButton/></li>
-            <li><a href="#">Informacje</a></li>
+            <li><a href="/info">Informacje</a></li>
         </ul>
     </div>
 

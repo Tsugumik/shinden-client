@@ -1,4 +1,6 @@
 import type {User} from "$lib/types";
+import {invoke} from "@tauri-apps/api/core";
+import {log, LogLevel} from "$lib/logs/logs.svelte";
 
 export enum LoadingState {
     LOADING,
@@ -27,3 +29,16 @@ export const params: {
     animeName: "",
     seriesUrl: "",
 })
+
+export async function getUserData(): Promise<boolean> {
+    const username = await invoke("get_user_name");
+    const user_profile_image_url = await invoke("get_user_profile_image");
+
+    if(user_profile_image_url && username) {
+        globalStates.user.name = username as string;
+        globalStates.user.image_url = user_profile_image_url as string;
+        return true;
+    }
+
+    return false;
+}

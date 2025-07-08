@@ -1,7 +1,7 @@
 <script lang="ts">
     import {invoke} from "@tauri-apps/api/core";
     import {log, LogLevel} from "$lib/logs/logs.svelte";
-    import {globalStates, LoadingState} from "$lib/global.svelte";
+    import {getUserData, globalStates, LoadingState} from "$lib/global.svelte";
 
     let email: string = $state("");
     let password: string = $state("");
@@ -12,10 +12,30 @@
             log(LogLevel.INFO, "Trying to log in");
             globalStates.loadingState = LoadingState.LOADING;
             await invoke("login", {username: email, password: password});
+            await getUserData();
+            globalStates.loadingState = LoadingState.OK;
+            log(LogLevel.SUCCESS, `Successfully logged in`);
         } catch (error) {
             globalStates.loadingState = LoadingState.ERROR;
             log(LogLevel.ERROR, `Could not log in: ${error}`);
         }
+    }
+
+    async function logout() {
+        try {
+            log(LogLevel.INFO, "Trying to log in");
+            globalStates.loadingState = LoadingState.LOADING;
+            await invoke("logout");
+        } catch (error) {
+            globalStates.loadingState = LoadingState.ERROR;
+            log(LogLevel.ERROR, `Could not log out: ${error}`);
+        }
+
+        globalStates.user.name = null;
+        globalStates.user.image_url = null;
+
+        globalStates.loadingState = LoadingState.OK;
+        log(LogLevel.SUCCESS, "Log out successfully");
     }
 </script>
 
@@ -52,7 +72,7 @@
                     <p class="py-6">
                         W razie problemów z dostępem do listy odcinków - zaloguj się ponownie.
                     </p>
-                    <button class="btn btn-neutral">Wyloguj się</button>
+                    <button class="btn btn-neutral" onclick={logout}>Wyloguj się</button>
                 </div>
             </div>
     {/if}

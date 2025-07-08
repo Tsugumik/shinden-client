@@ -40,24 +40,36 @@
     })
 </script>
 
-<div class="flex flex-col h-full w-full overflow-y-scroll">
-    <ul class="list bg-base-100 rounded-box shadow-md">
+{#if globalStates.loadingState === LoadingState.LOADING}
+    <div class="flex w-full h-full flex-col gap-4 p-4">
+        <div class="skeleton h-32 w-full"></div>
+        <div class="skeleton h-32 w-full"></div>
+        <div class="skeleton h-32 w-full"></div>
+        <div class="skeleton h-32 w-full"></div>
+        <div class="skeleton h-32 w-full"></div>
+    </div>
+{:else}
+    <div class="flex flex-col h-full w-full overflow-y-scroll">
+        <ul class="list bg-base-100 rounded-box shadow-md">
 
-        <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Wyniki wyszukiwania:</li>
+            <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Wyniki wyszukiwania:</li>
 
-        {#each result as anime}
-            <li class="list-row flex items-center justify-between">
-                <div class="text-4xl font-thin opacity-30 tabular-nums">{anime.rating}</div>
-                <div class=""><img class="w-12 rounded-box object-fill shadow-sm" src={anime.image_url} alt="anime"/></div>
-                <div class="list-col-grow flex-1">
-                    <div>{anime.name}</div>
-                    <div class="text-xs uppercase font-semibold opacity-60">{anime.anime_type}</div>
-                </div>
-                <button class="btn btn-square btn-ghost" aria-label="play">
-                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
-                </button>
-            </li>
-        {/each}
-    </ul>
-</div>
+            {#each result as anime}
+                <li class="list-row flex items-center justify-between">
+                    <div class="text-4xl font-thin opacity-30 tabular-nums">{anime.rating}</div>
+                    <div class=""><img class="w-12 rounded-box object-fill shadow-sm" src={anime.image_url} alt="anime"/></div>
+                    <div class="list-col-grow flex-1">
+                        <div>{anime.name}</div>
+                        <div class="text-xs uppercase font-semibold opacity-60">{anime.anime_type}</div>
+                    </div>
+                    <button class="btn btn-square btn-ghost" aria-label="play">
+                        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
+                    </button>
+                </li>
+            {/each}
+        </ul>
+    </div>
+{/if}
+
+
 
