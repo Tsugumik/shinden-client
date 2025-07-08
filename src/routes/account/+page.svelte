@@ -23,7 +23,7 @@
 
     async function logout() {
         try {
-            log(LogLevel.INFO, "Trying to log in");
+            log(LogLevel.INFO, "Trying to log out");
             globalStates.loadingState = LoadingState.LOADING;
             await invoke("logout");
         } catch (error) {

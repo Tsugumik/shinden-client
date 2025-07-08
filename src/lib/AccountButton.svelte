@@ -2,12 +2,18 @@
     import {invoke} from "@tauri-apps/api/core";
     import {getUserData, globalStates} from "$lib/global.svelte";
     import {onMount} from "svelte";
+    import {log, LogLevel} from "$lib/logs/logs.svelte";
 
     let loading: boolean = $state(false);
 
     async function getLogin() {
         loading = true;
-        await getUserData();
+        try {
+            await getUserData();
+        } catch (error) {
+            log(LogLevel.INFO, "User not logged in");
+            loading = false;
+        }
         loading = false;
     }
 
