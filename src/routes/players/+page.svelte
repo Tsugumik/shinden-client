@@ -32,8 +32,6 @@
                return acc;
            }, {});
 
-           console.log(grouped);
-
            globalStates.loadingState = LoadingState.OK;
            log(LogLevel.SUCCESS, "Loaded players successfully");
 

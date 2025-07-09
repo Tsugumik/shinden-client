@@ -18,8 +18,6 @@
                 query: params.animeName
             });
 
-            console.log(result);
-
             if (result.length > 0) {
                 result = result.sort((a, b) => {
                     let a_rating = Number(a.rating.replace(",", "."));

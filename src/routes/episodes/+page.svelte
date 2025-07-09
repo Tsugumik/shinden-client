@@ -15,9 +15,6 @@
            episodes = await invoke("get_episodes", {
                url: params.seriesUrl
            });
-
-           console.log(params.seriesUrl, episodes);
-
            globalStates.loadingState = LoadingState.OK;
            log(LogLevel.SUCCESS, "Loaded episodes successfully");
        } catch (e) {
