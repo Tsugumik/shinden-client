@@ -1,6 +1,6 @@
 [package]
-name = "shinden-client-rs"
-version = "0.1.0"
+name = "ShindenClient"
+version = "4.0.0"
 description = "A Tauri App"
 authors = ["you"]
 edition = "2021"

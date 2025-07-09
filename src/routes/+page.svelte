@@ -24,7 +24,8 @@
 
     function handleButton(event: Event) {
         event.preventDefault();
-        goto(`/search/${animeName}`);
+        params.animeName = animeName;
+        goto("/search");
     }
 
 </script>

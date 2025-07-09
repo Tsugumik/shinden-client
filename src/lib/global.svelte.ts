@@ -26,10 +26,12 @@ export const params: {
     animeName: string;
     seriesUrl: string;
     playersUrl: string;
+    playerId: string;
 } = $state({
     animeName: "",
     seriesUrl: "",
     playersUrl: "",
+    playerId: "",
 })
 
 export async function getUserData(): Promise<boolean> {

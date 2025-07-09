@@ -15,7 +15,7 @@
             log(LogLevel.INFO, `Searching anime: ${page.params.name}`);
 
             result = await invoke("search", {
-                query: page.params.name
+                query: params.animeName
             });
 
             console.log(result);

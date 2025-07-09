@@ -3,6 +3,18 @@
 version = 4
 
 [[package]]
+name = "ShindenClient"
+version = "4.0.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "shinden-pl-api",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-opener",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.24.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3646,18 +3658,6 @@ dependencies = [
  "cfg-if",
  "cpufeatures",
  "digest",
-]
-
-[[package]]
-name = "shinden-client-rs"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "shinden-pl-api",
- "tauri",
- "tauri-build",
- "tauri-plugin-opener",
 ]
 
 [[package]]
