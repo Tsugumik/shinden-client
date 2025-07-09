@@ -1,6 +1,7 @@
 <script lang="ts">
     import LoadingButton from "$lib/LoadingButton.svelte";
     import AccountButton from "$lib/AccountButton.svelte";
+    import { getCurrentWindow } from "@tauri-apps/api/window";
 </script>
 
 <header data-tauri-drag-region class="navbar shadow-sm bg-base-300 h-3 gap-4">
@@ -23,10 +24,10 @@
         <button class="btn btn-circle btn-sm" onclick={() => history.back()}>
             &#8592;
         </button>
-        <button class="btn btn-circle btn-sm">
+        <button class="btn btn-circle btn-sm" onclick={() => getCurrentWindow().minimize()}>
             &#128469;
         </button>
-        <button class="btn btn-circle btn-sm">
+        <button class="btn btn-circle btn-sm" onclick={() => getCurrentWindow().close()}>
             &#x2715;
         </button>
     </div>
