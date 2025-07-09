@@ -22,7 +22,7 @@ import Success from "$lib/logs/Success.svelte";
     </header>
 
     <div class="flex gap-4 p-4 flex-1 list scroll max-h-full overflow-y-scroll">
-        {#each logs.reverse() as log}
+        {#each logs.slice().reverse() as log}
             {#if log.logLevel === LogLevel.INFO}
                 <Info message={log.getText()} />
                 {:else if log.logLevel === LogLevel.ERROR}

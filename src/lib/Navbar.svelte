@@ -20,6 +20,9 @@
     </div>
 
     <div>
+        <button class="btn btn-circle btn-sm" onclick={() => history.back()}>
+            &#8592;
+        </button>
         <button class="btn btn-circle btn-sm">
             &#128469;
         </button>

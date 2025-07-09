@@ -17,6 +17,8 @@
         } else {
             htmlClass = "bg-base";
         }
+
+        console.log(htmlClass);
     });
 
     $effect(()=> {

@@ -6,7 +6,7 @@
         style="background-image: url(/bg.jpg);"
 >
     <div class="hero-overlay bg-base-100/90"></div>
-    <div class="hero-content text-center bg-base-100 rounded-md">
+    <div class="hero-content text-center bg-base-100 rounded-md shadow-2xl">
         <div class="max-w-md flex flex-col">
             <h1 class="text-5xl font-bold font-[Orbitron]">Shinden Client 4</h1>
             <h2>version: 4.0.1</h2>

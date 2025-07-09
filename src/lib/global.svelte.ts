@@ -25,9 +25,11 @@ export const globalStates: {
 export const params: {
     animeName: string;
     seriesUrl: string;
+    playersUrl: string;
 } = $state({
     animeName: "",
     seriesUrl: "",
+    playersUrl: "",
 })
 
 export async function getUserData(): Promise<boolean> {

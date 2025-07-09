@@ -3662,9 +3662,9 @@ dependencies = [
 
 [[package]]
 name = "shinden-pl-api"
-version = "0.1.2"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "63b88f747dfdc15ce42818d1844de91107853348dcab04c56808694c6d9b77f5"
+checksum = "00eac20d790bccbdab393461a0540cecdeb4ab58256aa5a5a1428c4dacf21823"
 dependencies = [
  "anyhow",
  "cookie_store",
