@@ -9,3 +9,7 @@
     font-display: swap;
     src: url("/Orbitron-VariableFont_wght.ttf") format("woff2");
 }
+
+body {
+    font-family: "Roboto", sans-serif;
+}
