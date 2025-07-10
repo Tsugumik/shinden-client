@@ -1,38 +1,43 @@
-# 🎌 Shinden Client 4
+# 🚀 Shinden Client 4
 
-> **A fast, lightweight and private desktop client for Shinden.pl**  
-> Rewritten from scratch using **Rust + Tauri + SvelteKit** — built for speed and simplicity.
-
----
-
-![screenshot](./src-tauri/icons/256.png) <!-- Replace with actual screenshot -->
-
-## ✨ Features
-
-- ⚡ **Ultra-low memory usage** – ~6 MB
-- 💻 Native support: Windows, Linux, macOS
-- 🧼 No ads, no tracking – **100% private**
-- 🧠 Persistent cookie/session handling
-- 🌗 Light and dark themes
-- 🔧 Built-in debug console for logs and errors
-- 📦 App size under 14 MB
+> **Nowoczesna, szybka aplikacja desktopowa dla użytkowników Shinden.pl**  
+> Stworzona z pasji do anime — oparta na **Rust + Tauri + SvelteKit**.
 
 ---
 
-## 🤔 Why not just use a browser?
+![logo](./src-tauri/icons/256.png)
 
-- 🛑 Blocks ads (sanitizes iframe content)
-- 🔐 Keeps Shinden cookies private – never shared with third parties
-- 🧘 Cleaner UX, focused anime browsing experience
+## 🧩 Co to jest?
 
-# 🌠 Screenshots
+**Shinden Client** to natywna aplikacja do przeglądania i oglądania anime na Shinden.pl — bez reklam, śledzenia i zbędnych elementów.  
+Zamiast przeglądarki, dostajesz lekki, szybki i skoncentrowany na treści interfejs, który po prostu działa.
+
+## 🌟 Najważniejsze cechy
+
+- ⚡ **Błyskawiczne działanie** – aplikacja startuje w mniej niż sekundę
+- 💾 **Niskie zużycie zasobów** – mniej niż 10 MB RAM
+- 🧼 **Czysty interfejs bez reklam i popupów**
+- 🌗 **Motywy jasny / ciemny**
+- 🪵 **Konsola błędów i logów** — pomocna przy zgłoszeniach
+- 📺 **Wbudowany odtwarzacz dla treści z cda.pl**
+
+---
+
+# 🌠 Zrzuty ekranu
 ...
 ---
 
-# LICENSE
+# LICENCJA
+
 MIT © 2025 Błażej Drozd
 This project is not affiliated with Shinden.pl. It does not host or redistribute any copyrighted content.
 
-# ❤️ Support the Project
-If you enjoy this project, leave a ⭐ or share feedback!
-Feature ideas? Bugs? Open an issue or submit a PR.
+Projekt nie jest powiązany z Shinden.pl.
+Nie hostuje ani nie rozpowszechnia treści objętych prawem autorskim.
+Służy wyłącznie jako alternatywny interfejs do istniejącej strony.
+
+# ❤️ Wesprzyj rozwój
+- ⭐ Zostaw gwiazdkę, jeśli Ci się podoba
+- 🐞 Zgłoś błąd lub otwórz dyskusję
+- 🧪 Pomóż testować nowe funkcje
+- 🔧 Pull Requesty mile widziane!
