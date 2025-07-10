@@ -5,6 +5,8 @@
     import {globalStates, LoadingState, params} from "$lib/global.svelte";
     import {log, LogLevel} from "$lib/logs/logs.svelte";
     import {goto} from "$app/navigation";
+    import Empty from "$lib/Empty.svelte";
+    import {builtinPlayers, dangerousPlayers, safePlayers} from "$lib/playerSafety.svelte";
 
     let players: Player[] = $state([]);
     let grouped: Record<string, Player[]> = $state({});
@@ -56,11 +58,26 @@
         <div class="skeleton h-32 w-full"></div>
     </div>
 {:else if globalStates.loadingState === LoadingState.OK}
+    {#if players.length > 0}
+    <div class="flex flex-col gap-4 p-4">
     {#each Object.keys(grouped) as playerName}
-
-        <div class="collapse collapse-arrow bg-base-100">
+        <div class="collapse collapse-arrow bg-base-100 border border-base-300">
             <input type="checkbox" />
-            <div class="collapse-title font-semibold">{playerName}</div>
+            <div class="collapse-title font-semibold flex items-center gap-4"> {playerName}
+            {#if safePlayers.includes(playerName)}
+                <div class="badge badge-info">Bezpieczny</div>
+                <div class="badge badge-success">Brak reklam</div>
+            {:else if builtinPlayers.includes(playerName)}
+                <div class="badge badge-success">Wbudowany</div>
+                <div class="badge badge-success">Brak reklam</div>
+            {:else if dangerousPlayers.includes(playerName)}
+                <div class="badge badge-error">Niebezpieczny</div>
+                <div class="badge badge-error">Zawiera reklamy</div>
+            {:else}
+                <div class="badge badge-warning">Nieznany</div>
+                <div class="badge badge-warning">Potencjalne reklamy</div>
+            {/if}
+            </div>
             <div class="collapse-content text-sm">
                 <ul class="list">
                     {#each grouped[playerName] as player, i}
@@ -80,4 +97,8 @@
             </div>
         </div>
     {/each}
+    </div>
+    {:else}
+    <Empty />
+    {/if}
 {/if}

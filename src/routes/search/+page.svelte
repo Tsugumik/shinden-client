@@ -6,6 +6,7 @@
     import {log, LogLevel} from "$lib/logs/logs.svelte";
     import {globalStates, LoadingState, params} from "$lib/global.svelte";
     import {goto} from "$app/navigation";
+    import Empty from "$lib/Empty.svelte";
     globalStates.loadingState = LoadingState.LOADING;
 
     let result: Array<Anime> = $state([]);
@@ -53,6 +54,9 @@
         <div class="skeleton h-32 w-full"></div>
     </div>
 {:else}
+
+    {#if result.length > 0}
+
     <div class="flex flex-col h-full w-full overflow-y-scroll">
         <ul class="list bg-base-100 rounded-box shadow-md">
 
@@ -66,13 +70,24 @@
                         <div>{anime.name}</div>
                         <div class="text-xs uppercase font-semibold opacity-60">{anime.anime_type}</div>
                     </div>
-                    <button class="btn btn-square btn-ghost" aria-label="play" onclick={async ()=>{ await handleButton(anime.url) }}>
-                        <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
-                    </button>
+                    {#if anime.url.startsWith("https://shinden.pl/titles") && globalStates.user.name === null}
+                        <div class="badge badge-warning">Zaloguj się aby obejrzeć</div>
+                        <button disabled data-debug-url={anime.url} class="btn btn-square btn-ghost" aria-label="play" onclick={async ()=>{ await handleButton(anime.url) }}>
+                            <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
+                        </button>
+                    {:else}
+                        <button data-debug-url={anime.url} class="btn btn-square btn-ghost" aria-label="play" onclick={async ()=>{ await handleButton(anime.url) }}>
+                            <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
+                        </button>
+                    {/if}
+
                 </li>
             {/each}
         </ul>
     </div>
+    {:else}
+        <Empty />
+    {/if}
 {/if}
 
 
