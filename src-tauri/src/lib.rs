@@ -1,9 +1,5 @@
-
-use reqwest::Client;
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 use shinden_pl_api::client::ShindenAPI;
 use shinden_pl_api::models::{Anime, Episode, Player};
-use warp::{Filter, http::header::{HeaderMap, HeaderValue, RANGE, CONTENT_TYPE, ACCESS_CONTROL_ALLOW_ORIGIN}};
 struct Api(ShindenAPI);
 
 #[tauri::command]
@@ -80,7 +76,7 @@ async fn get_iframe(state: tauri::State<'_, Api>, id: String) -> Result<String, 
 }
 
 #[tauri::command]
-async fn get_cda_video(state: tauri::State<'_, Api>, url: String) -> Result<String, String> {
+async fn get_cda_video(_state: tauri::State<'_, Api>, url: String) -> Result<String, String> {
     let url_clone = url.clone();
     tauri::async_runtime::spawn_blocking(move || {
         tauri::async_runtime::block_on(async {

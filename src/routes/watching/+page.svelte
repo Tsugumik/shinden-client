@@ -39,7 +39,7 @@
                     url: iframeSrc
                 });
 
-                log(LogLevel.SUCCESS, `Resolved CDA video URL: ${pendingVideoUrl}`);
+                log(LogLevel.SUCCESS, `Resolved CDA video URL`);
 
 
 

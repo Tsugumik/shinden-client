@@ -1,6 +1,8 @@
 export const safePlayers = $state([
     "Gdrive",
-    "Mega"
+    "Mega",
+    "Vk",
+    "Dailymotion"
 ]);
 
 export const builtinPlayers = $state([
@@ -8,5 +10,10 @@ export const builtinPlayers = $state([
 ]);
 
 export const dangerousPlayers = $state([
-    "Sibnet"
+    "Sibnet",
+    "Aparat",
+    "Dood",
+    "Default",
+    "Hqq",
+    "Mp4upload"
 ])
