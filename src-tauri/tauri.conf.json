@@ -9,8 +9,8 @@
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../build"
   },
-  "macOSPrivateApi": true,
   "app": {
+    "macOSPrivateApi": true,
     "windows": [
       {
         "title": "Shinden Client",
