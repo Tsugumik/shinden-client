@@ -26,7 +26,7 @@
             &#8592;
         </button>
         <button class="btn btn-circle btn-sm" onclick={() => getCurrentWindow().minimize()}>
-            &#128469;
+            &#x1F5D5;
         </button>
         <button class="btn btn-circle btn-sm" onclick={() => getCurrentWindow().close()}>
             &#x2715;

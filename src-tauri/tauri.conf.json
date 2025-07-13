@@ -9,6 +9,7 @@
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../build"
   },
+  "macOSPrivateApi": true,
   "app": {
     "windows": [
       {
@@ -16,7 +17,8 @@
         "width": 900,
         "height": 700,
         "decorations": false,
-        "resizable": false
+        "resizable": false,
+
       }
     ],
     "security": {
