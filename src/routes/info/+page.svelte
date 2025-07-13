@@ -46,7 +46,7 @@
     <div class="hero-content text-center">
         <div class="max-w-md flex flex-col gap-2 items-center">
             <div>
-                <h1 class="text-5xl font-bold font-[Orbitron]">Shinden Client 4</h1>
+                <h1 class="text-5xl font-bold font-[Orbitron] text-nowrap">Shinden Client 4</h1>
                 <h2>v.{version}</h2>
                 <p class="font-mono">
                     MIT License
