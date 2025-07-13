@@ -1,4 +1,5 @@
 import {check} from "@tauri-apps/plugin-updater";
+import {log, LogLevel} from "$lib/logs/logs.svelte";
 
 export enum UpdateState {
     CHECKING,
@@ -29,7 +30,7 @@ export function getStatusMessage(state: UpdateState) {
         case UpdateState.DOWNLOADING:
             return "Pobieranie aktualizacji";
         case UpdateState.INSTALLED:
-            return "Zainstalowano aktualizację";
+            return "Zainstalowano aktualizacje";
         case UpdateState.UNKNOWN:
             return "Nie sprawdzano aktualizacji";
         default:
@@ -52,6 +53,39 @@ export async function checkUpdate() : Promise<boolean> {
         } else {
             await setUpdateState(UpdateState.NOT_AVAILABLE);
             return false;
+        }
+    } catch (e) {
+        await setUpdateState(UpdateState.ERROR);
+        throw(e);
+    }
+}
+
+export async function getAndinstallUpdate() {
+    await setUpdateState(UpdateState.CHECKING);
+    try {
+        const update = await check();
+        if(update) {
+            await update.downloadAndInstall((event)=>{
+                switch (event.event) {
+                    case 'Started':
+                        log(LogLevel.INFO, "Update started");
+                        status.updateState = UpdateState.DOWNLOADING;
+                        break;
+                        case 'Progress':
+                            break;
+                    case 'Finished':
+                        log(LogLevel.INFO, "Download finished");
+                        status.updateState = UpdateState.INSTALLED;
+                        break;
+                    default:
+                        break;
+                }
+            });
+            log(LogLevel.INFO, "Update finished");
+            status.updateState = UpdateState.INSTALLED;
+
+        } else {
+            await setUpdateState(UpdateState.NOT_AVAILABLE);
         }
     } catch (e) {
         await setUpdateState(UpdateState.ERROR);
