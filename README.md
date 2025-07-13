@@ -33,10 +33,10 @@ Zamiast przeglądarki, dostajesz lekki, szybki i skoncentrowany na treści inter
 
 # 🌠 Zrzuty ekranu
 <img src="./screenshots/img.png" alt="Strona główna" width="50%">
-<img src="./screenshots/img_1.png" alt="Strona główna" width="50%">
-<img src="./screenshots/img_2.png" alt="Strona główna" width="50%">
-<img src="./screenshots/img_4.png" alt="Strona główna" width="50%">
-<img src="./screenshots/img_3.png" alt="Strona główna" width="50%">
+<img src="./screenshots/img_1.png" alt="Wyniki wyszukiwania" width="50%">
+<img src="./screenshots/img_2.png" alt="Lista odcinków" width="50%">
+<img src="./screenshots/img_4.png" alt="Lista odtwarzaczy" width="50%">
+<img src="./screenshots/img_3.png" alt="Anime Hunter x Hunter" width="50%">
 
 ---
 
