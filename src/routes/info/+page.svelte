@@ -39,11 +39,11 @@
 </script>
 
 <div class="flex flex-col items-center gap-2 py-2">
-    <h2 class="text-center text-lg">Panel aktualizacji</h2>
+    <h2 class="text-center text-lg">Aktualizacje</h2>
     <div class="badge badge-dash w-96">{status.statusMessage}</div>
     <div class="join">
-        <button class="btn join-item" onclick={checkForUpdates}>Sprawdź aktualizacje</button>
-        <button class="btn join-item" disabled={!(status.updateState===UpdateState.AVAILABLE)} onclick={getAndinstallUpdate}>Pobierz aktualizacje</button>
+        <button class="btn join-item" onclick={checkForUpdates}>Sprawdź dostępność</button>
+        <button class="btn join-item" disabled={!(status.updateState===UpdateState.AVAILABLE)} onclick={getAndinstallUpdate}>Pobierz i zainstaluj</button>
     </div>
 
 </div>
@@ -61,7 +61,7 @@
                 </p>
             </div>
             <div>
-                <div class="font-mono">Tech</div>
+                <div class="font-mono">Thanks to</div>
                 <div class="flex flex-row justify-around p-4 gap-10">
                     <a href="https://vitejs.dev" target="_blank" class="drop-shadow-sm drop-shadow-base-content">
                         <img src="/vite.svg" class="w-14" alt="Vite Logo" />

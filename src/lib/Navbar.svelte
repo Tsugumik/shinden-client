@@ -7,7 +7,7 @@
 
 <header data-tauri-drag-region class="navbar shadow-sm bg-base-300 h-3 gap-4">
     <div data-tauri-drag-region class="flex-1 font-[Orbitron] flex items-center gap-4">
-        <a class="btn btn-ghost text-xl" href="/">Shinden Client 4.0</a>
+        <a class="btn btn-ghost text-xl" href="/">Shinden Client 4</a>
         <LoadingButton />
     </div>
     <div class="flex-none">
