@@ -92,6 +92,7 @@ async fn get_cda_video(_state: tauri::State<'_, Api>, url: String) -> Result<Str
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_http::init())
         .manage(Api(ShindenAPI::new().expect("Failed to create ShindenAPI")))
         .plugin(tauri_plugin_opener::init())

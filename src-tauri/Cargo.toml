@@ -25,4 +25,8 @@ shinden-pl-api = "0.1.5"
 cda-dl = "0.1.0"
 reqwest = "0.12.22"
 tauri-plugin-http = "2"
+serde_json = "1.0.140"
 warp = "0.3.7"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-updater = "2"

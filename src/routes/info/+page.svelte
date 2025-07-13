@@ -1,36 +1,73 @@
-<script>
+<script lang="ts">
+    import {app} from "@tauri-apps/api";
+    import {onMount} from "svelte";
+    import {checkUpdate, status} from "$lib/updater.svelte";
+    import {globalStates, LoadingState} from "$lib/global.svelte";
+    import {log, LogLevel} from "$lib/logs/logs.svelte";
+
+    let version: string | undefined = $state();
+
+    onMount(async() => {
+        version = await app.getVersion();
+    });
+
+    async function checkForUpdates() {
+        globalStates.loadingState = LoadingState.LOADING;
+        log(LogLevel.INFO, "Checking for updates...")
+
+        try {
+
+            let status = await checkUpdate();
+
+            if (status) {
+                log(LogLevel.SUCCESS, "New update available!");
+            } else {
+                log(LogLevel.INFO, "No updates available!");
+            }
+            globalStates.loadingState = LoadingState.OK;
+
+
+        } catch (e) {
+            globalStates.loadingState = LoadingState.ERROR;
+            log(LogLevel.ERROR, `${e}`);
+        }
+    }
 </script>
 
-<div
-        class="hero h-full"
-        style="background-image: url(/bg.jpg);"
->
+<div class="flex flex-col items-center gap-2 py-2">
+    <h2 class="text-center text-lg">Panel aktualizacji</h2>
+    <div class="badge badge-dash w-96">{status.statusMessage}</div>
+    <button class="btn" onclick={checkForUpdates}>Sprawdź aktualizacje</button>
+</div>
+
+<div class="divider px-4"></div>
+<div class="hero">
     <div class="hero-overlay bg-base-100/90"></div>
-    <div class="hero-content text-center bg-base-100 rounded-md shadow-2xl">
-        <div class="max-w-md flex flex-col">
-            <h1 class="text-5xl font-bold font-[Orbitron]">Shinden Client 4</h1>
-            <h2>version: 4.0.0</h2>
-            <p class="mb-5">
-                By Błażej Drozd - MIT License
-            </p>
-            <div>Made with</div>
-            <div class="flex flex-row justify-around p-4">
-                <a href="https://vitejs.dev" target="_blank">
-                    <img src="/vite.svg" class="w-14" alt="Vite Logo" />
-                </a>
-                <a href="https://tauri.app" target="_blank">
-                    <img src="/tauri.svg" class="w-14" alt="Tauri Logo" />
-                </a>
-                <a href="https://kit.svelte.dev" target="_blank">
-                    <img src="/svelte.svg" class="w-14" alt="SvelteKit Logo" />
-                </a>
+    <div class="hero-content text-center">
+        <div class="max-w-md flex flex-col gap-2 items-center">
+            <div>
+                <h1 class="text-5xl font-bold font-[Orbitron]">Shinden Client 4</h1>
+                <h2>v.{version}</h2>
+                <p class="font-mono">
+                    MIT License
+                </p>
             </div>
-
-            <video autoplay src="https://vwaw348.cda.pl/h/b/b/24/na/gmByvcQoLUz2ZILUt_Bi-A/33/1752218288/sd356b1936a640b79f2ab1f6c747f638df.mp4">
-
-            </video>
-
-            <a target="_blank" class="btn btn-neutral" href="https://github.com/KlapChat-Entertainment/shinden-client">GitHub</a>
+            <div>
+                <div class="font-mono">Tech</div>
+                <div class="flex flex-row justify-around p-4 gap-10">
+                    <a href="https://vitejs.dev" target="_blank" class="drop-shadow-sm drop-shadow-base-content">
+                        <img src="/vite.svg" class="w-14" alt="Vite Logo" />
+                    </a>
+                    <a href="https://tauri.app" target="_blank" class="drop-shadow-sm drop-shadow-base-content">
+                        <img src="/tauri.svg" class="w-14" alt="Tauri Logo" />
+                    </a>
+                    <a href="https://kit.svelte.dev" target="_blank" class="drop-shadow-sm drop-shadow-base-content">
+                        <img src="/svelte.svg" class="w-14" alt="SvelteKit Logo" />
+                    </a>
+                </div>
+            </div>
+            <a target="_blank" href="https://github.com/Tsugumik"><img src="/Badge.svg" width="200" alt="Badge" class="drop-shadow-sm drop-shadow-base-content"></a>
         </div>
     </div>
 </div>
+

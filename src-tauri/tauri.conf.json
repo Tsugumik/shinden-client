@@ -26,11 +26,20 @@
   "bundle": {
     "active": true,
     "targets": "all",
+    "createUpdaterArtifacts": true,
     "icon": [
       "icons/32.png",
       "icons/128.png",
       "icons/256.png",
       "icons/sc4.ico"
     ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRCNDA0QkM5ODAwNzhDNUUKUldSZWpBZUF5VXRBU3lMaUs4cVNuY2JRdURTdHhsOVY2ZHdiZWN5cWdDeUl1RzB1SzJsZXJXL0sK",
+      "endpoints": [
+        "https://github.com/Tsugumik/shinden-client/repo/releases/latest/download/latest.json"
+      ]
+    }
   }
 }

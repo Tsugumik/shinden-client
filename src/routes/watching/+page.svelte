@@ -87,7 +87,7 @@
 
             {#if isBuiltIn}
             <div class="w-full h-full p-4 rounded-2xl shadow-lg flex flex-col items-center justify-center gap-2">
-                <div class="w-full h-[70vh]">
+                <div class="w-full h-[70vh] flex items-center justify-center">
                     {#if isMp4}
                     <video controls autoplay src={pendingVideoUrl}>
                     </video>

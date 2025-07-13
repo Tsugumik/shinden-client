@@ -17,6 +17,7 @@
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-http": "^2.5.0",
     "@tauri-apps/plugin-opener": "^2",
+    "@tauri-apps/plugin-updater": "^2.9.0",
     "daisyui": "^5.0.46",
     "dashjs": "^5.0.3",
     "tailwindcss": "^4.1.11"

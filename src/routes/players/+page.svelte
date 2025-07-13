@@ -7,9 +7,20 @@
     import {goto} from "$app/navigation";
     import Empty from "$lib/Empty.svelte";
     import {builtinPlayers, dangerousPlayers, safePlayers} from "$lib/playerSafety.svelte";
+    import PlayerListElement from "$lib/PlayerListElement.svelte";
+    import Secure from "$lib/badges/Secure.svelte";
+    import BuiltIn from "$lib/badges/BuiltIn.svelte";
+    import Players from "$lib/Players.svelte";
+    import Unsecure from "$lib/badges/Unsecure.svelte";
+    import Unknown from "$lib/badges/Unknown.svelte";
 
     let players: Player[] = $state([]);
     let grouped: Record<string, Player[]> = $state({});
+
+    let safe: string[] = $state([]);
+    let unsafe: string[] = $state([]);
+    let unknown: string[] = $state([]);
+    let builtIn: string[] = $state([]);
 
     onMount(async ()=>{
        try {
@@ -37,16 +48,27 @@
            globalStates.loadingState = LoadingState.OK;
            log(LogLevel.SUCCESS, "Loaded players successfully");
 
+           for (let groupedKey in grouped) {
+               console.log(groupedKey);
+               if(safePlayers.includes(groupedKey)) {
+                   safe.push(groupedKey)
+                   console.log(`SafePlayers: ${safePlayers}`);
+               } else if(dangerousPlayers.includes(groupedKey)) {
+                    unsafe.push(groupedKey)
+               } else if(builtinPlayers.includes(groupedKey)) {
+                   builtIn.push(groupedKey)
+               } else {
+                   unknown.push(groupedKey)
+               }
+           }
+
        } catch (e) {
            globalStates.loadingState = LoadingState.ERROR;
            log(LogLevel.ERROR, `Error loading players: ${e}`);
        }
     });
 
-    async function handleButton(playerId: string) {
-        params.playerId = playerId;
-        await goto(`/watching`);
-    }
+
 </script>
 
 {#if globalStates.loadingState === LoadingState.LOADING}
@@ -59,45 +81,18 @@
     </div>
 {:else if globalStates.loadingState === LoadingState.OK}
     {#if players.length > 0}
-    <div class="flex flex-col gap-4 p-4">
-    {#each Object.keys(grouped) as playerName}
-        <div class="collapse collapse-arrow bg-base-100 border border-base-300">
-            <input type="checkbox" />
-            <div class="collapse-title font-semibold flex items-center gap-4"> {playerName}
-            {#if safePlayers.includes(playerName)}
-                <div class="badge badge-info">Bezpieczny</div>
-                <div class="badge badge-success">Brak reklam</div>
-            {:else if builtinPlayers.includes(playerName)}
-                <div class="badge badge-success">Wbudowany</div>
-                <div class="badge badge-success">Brak reklam</div>
-            {:else if dangerousPlayers.includes(playerName)}
-                <div class="badge badge-error">Niebezpieczny</div>
-                <div class="badge badge-error">Zawiera reklamy</div>
-            {:else}
-                <div class="badge badge-warning">Nieznany</div>
-                <div class="badge badge-warning">Potencjalne reklamy</div>
-            {/if}
-            </div>
-            <div class="collapse-content text-sm">
-                <ul class="list">
-                    {#each grouped[playerName] as player, i}
-                        <li class="list-row flex items-center justify-between">
-                            <div class="text-4xl font-thin opacity-30 tabular-nums w-16 text-center">{i+1}</div>
-                            <div class="list-col-grow flex-1">
-                                <div>Język napisów: {player.lang_subs}</div>
-                                <div>Język audio: {player.lang_audio}</div>
-                            </div>
-                            <div class="text-4xl font-thin opacity-30 tabular-nums w-28 text-center">{player.max_res}</div>
-                            <button class="btn btn-square btn-ghost" aria-label="play" onclick={async() => {await handleButton(player.online_id)}}>
-                                <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
-                            </button>
-                        </li>
-                    {/each}
-                </ul>
-            </div>
-        </div>
-    {/each}
-    </div>
+        <Players keys={builtIn} group={grouped}>
+            <BuiltIn /> <Secure />
+        </Players>
+        <Players keys={safe} group={grouped}>
+            <Secure />
+        </Players>
+        <Players keys={unknown} group={grouped}>
+            <Unknown />
+        </Players>
+        <Players keys={unsafe} group={grouped}>
+            <Unsecure />
+        </Players>
     {:else}
     <Empty />
     {/if}

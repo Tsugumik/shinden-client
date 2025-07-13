@@ -3,6 +3,10 @@
     import {log, LogLevel} from "$lib/logs/logs.svelte";
     import {getUserData, globalStates, LoadingState} from "$lib/global.svelte";
 
+    let { data } = $props();
+
+    console.log(data);
+
     let email: string = $state("");
     let password: string = $state("");
     async function handleLogin(event: Event) {
@@ -42,11 +46,12 @@
 <div class="hero bg-base-200 h-full">
     {#if !globalStates.user.name}
         <div class="hero-content flex-col">
-            <div class="text-center lg:text-left">
+            <div class="text-center py-6">
                 <h1 class="text-5xl font-bold">Logowanie</h1>
-                <p class="py-6">
+                <p>
                     Zalogowanie się na konto w serwisie shinden.pl umożliwi ci oglądanie niedostępnych publicznie anime.
                 </p>
+                <p>Nie masz konta? <a class="link" target="_blank" href="https://shinden.pl/user/0/register">Zarejestruj się</a></p>
             </div>
             <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                 <form class="card-body" onsubmit={handleLogin}>

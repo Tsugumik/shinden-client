@@ -2,7 +2,8 @@ export const safePlayers = $state([
     "Gdrive",
     "Mega",
     "Vk",
-    "Dailymotion"
+    "Dailymotion",
+    "Youtube"
 ]);
 
 export const builtinPlayers = $state([

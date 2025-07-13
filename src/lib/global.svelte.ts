@@ -1,6 +1,5 @@
 import type {User} from "$lib/types";
 import {invoke} from "@tauri-apps/api/core";
-import {log, LogLevel} from "$lib/logs/logs.svelte";
 
 export enum LoadingState {
     LOADING,
