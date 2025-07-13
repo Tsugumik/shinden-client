@@ -19,12 +19,25 @@ Zamiast przeglądarki, dostajesz lekki, szybki i skoncentrowany na treści inter
 - 🧼 **Czysty interfejs bez reklam i popupów**
 - 🌗 **Motywy jasny / ciemny**
 - 🪵 **Konsola błędów i logów** — pomocna przy zgłoszeniach
-- 📺 **Wbudowany odtwarzacz dla treści z cda.pl**
+- 📺 **Wbudowany odtwarzacz dla treści z cda.pl bez reklam**
+
+---
+## 🖥️ Kompatybilność
+| System operacyjny | Obsługa |
+|-------------------| ------- |
+| 🪟 Windows        | ✅ Pełna |
+| 🍎 macOS          | ✅ Pełna |
+| 🐧 GNU/Linux      | ✅ Pełna |
 
 ---
 
 # 🌠 Zrzuty ekranu
-...
+<img src="./screenshots/img.png" alt="Strona główna" width="50%">
+<img src="./screenshots/img_1.png" alt="Strona główna" width="50%">
+<img src="./screenshots/img_2.png" alt="Strona główna" width="50%">
+<img src="./screenshots/img_4.png" alt="Strona główna" width="50%">
+<img src="./screenshots/img_3.png" alt="Strona główna" width="50%">
+
 ---
 
 # LICENCJA
