@@ -10,9 +10,12 @@ class BuildExePlanTests(unittest.TestCase):
 
         contents = launcher.read_text(encoding="utf-8")
 
+        self.assertIn("setlocal EnableExtensions EnableDelayedExpansion", contents)
         self.assertIn("scripts\\build_exe.py --preflight", contents)
         self.assertIn("scripts\\build_exe.py --bootstrap --yes", contents)
         self.assertIn("scripts\\build_exe.py %BUILD_ARGS%", contents)
+        self.assertIn("exit /b !ERRORLEVEL!", contents)
+        self.assertIn("BOOTSTRAP_UNAVAILABLE", contents)
         self.assertIn(":refresh_path", contents)
         self.assertIn('start "" "%ROOT%dist-exe"', contents)
 

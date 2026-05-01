@@ -1,5 +1,5 @@
 @echo off
-setlocal EnableExtensions
+setlocal EnableExtensions EnableDelayedExpansion
 cd /d "%~dp0"
 
 set "ROOT=%~dp0"
@@ -29,7 +29,8 @@ if "%NEED_BOOTSTRAP%"=="1" (
     call :log "Installing or checking build requirements with winget"
     where winget >nul 2>nul
     if errorlevel 1 (
-        call :log "winget was not found. Skipping automatic system bootstrap."
+        set "BOOTSTRAP_UNAVAILABLE=1"
+        call :log "winget was not found. Cannot install Node.js/Rust automatically on this machine."
     ) else (
         call :run_python scripts\build_exe.py --bootstrap --yes
         if errorlevel 1 goto fail
@@ -37,6 +38,8 @@ if "%NEED_BOOTSTRAP%"=="1" (
         call :refresh_path
     )
 )
+
+if defined BOOTSTRAP_UNAVAILABLE goto fail
 
 call :run_python scripts\build_exe.py --preflight
 if errorlevel 1 (
@@ -89,13 +92,13 @@ exit /b 10
 where python >nul 2>nul
 if not errorlevel 1 (
     python %*
-    exit /b %ERRORLEVEL%
+    exit /b !ERRORLEVEL!
 )
 
 where py >nul 2>nul
 if not errorlevel 1 (
     py -3 %*
-    exit /b %ERRORLEVEL%
+    exit /b !ERRORLEVEL!
 )
 
 exit /b 1
