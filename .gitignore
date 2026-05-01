@@ -9,3 +9,19 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .idea
+
+# Local logs and diagnostics
+/logs/
+*.log
+
+# Local EXE build outputs
+/dist-exe/
+/src-tauri/target/
+*.exe
+*.msi
+*.msix
+*.sig
+
+# Python helper cache
+__pycache__/
+.pytest_cache/

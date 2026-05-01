@@ -1,4 +1,6 @@
 
+import { invoke } from "@tauri-apps/api/core";
+
 export enum LogLevel {
     ERROR,
     INFO,
@@ -24,5 +26,12 @@ export class LogEntry {
 
 export function log(level: LogLevel, message: string) {
     logs.push(new LogEntry(level, message));
+    try {
+        void invoke("write_log", { level: LogLevel[level], message }).catch((error) => {
+            console.error("Could not write project log", error);
+        });
+    } catch (error) {
+        console.error("Could not write project log", error);
+    }
 }
 export const logs: LogEntry[] = $state([]);
