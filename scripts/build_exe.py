@@ -62,7 +62,9 @@ class PreflightResult:
         lines.extend(
             [
                 "",
-                "Install missing system tools, or run:",
+                "Install missing system tools automatically by running:",
+                "  generator_exe.bat",
+                "or run the Python bootstrap directly:",
                 "  python scripts\\build_exe.py --bootstrap",
                 "",
                 "The bootstrap mode uses winget for Node.js, Rust, Visual Studio Build Tools, and WebView2 Runtime.",

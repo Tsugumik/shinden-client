@@ -5,6 +5,17 @@ from scripts import build_exe
 
 
 class BuildExePlanTests(unittest.TestCase):
+    def test_single_file_launcher_runs_preflight_bootstrap_and_build(self):
+        launcher = Path(__file__).resolve().parents[1] / "generator_exe.bat"
+
+        contents = launcher.read_text(encoding="utf-8")
+
+        self.assertIn("scripts\\build_exe.py --preflight", contents)
+        self.assertIn("scripts\\build_exe.py --bootstrap --yes", contents)
+        self.assertIn("scripts\\build_exe.py %BUILD_ARGS%", contents)
+        self.assertIn(":refresh_path", contents)
+        self.assertIn('start "" "%ROOT%dist-exe"', contents)
+
     def test_plan_skips_install_when_node_modules_exist(self):
         root = Path("C:/project")
 
