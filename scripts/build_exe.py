@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shutil
 import subprocess
@@ -78,6 +79,11 @@ REQUIRED_TOOLS = [
     BuildTool("cargo", "Rust/Cargo", "Rustlang.Rustup"),
 ]
 
+WINDOWS_TOOL_ALIASES = {
+    "npm": ("npm", "npm.cmd"),
+    "cargo": ("cargo", "cargo.exe"),
+}
+
 WINDOWS_BUILD_PACKAGES = [
     WingetPackage(
         "Microsoft.VisualStudio.2022.BuildTools",
@@ -104,6 +110,7 @@ def plan_commands(
     node_modules_exists: bool | None = None,
     skip_install: bool = False,
     npm_command: str = "npm",
+    tauri_config: Path | None = None,
 ) -> list[list[str]]:
     if node_modules_exists is None:
         node_modules_exists = (root / "node_modules").exists()
@@ -112,12 +119,38 @@ def plan_commands(
     if not skip_install and not node_modules_exists:
         commands.append([npm_command, "install"])
 
-    commands.append([npm_command, "run", "tauri", "--", "build"])
+    build_command = [npm_command, "run", "tauri", "--", "build"]
+    if tauri_config is not None:
+        build_command.extend(["--config", str(tauri_config)])
+    commands.append(build_command)
     return commands
 
 
+def write_local_tauri_config(root: Path) -> Path:
+    config_path = root / "logs" / "tauri-local-build.conf.json"
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    config = {
+        "bundle": {
+            "createUpdaterArtifacts": False,
+        },
+    }
+    config_path.write_text(json.dumps(config, indent=2), encoding="utf-8")
+    return config_path
+
+
+def resolve_tool(
+    name: str,
+    *,
+    tool_lookup: Callable[[str], str | None] = shutil.which,
+) -> str | None:
+    for candidate in WINDOWS_TOOL_ALIASES.get(name, (name,)):
+        if path := tool_lookup(candidate):
+            return path
+    return None
+
+
 def ensure_tool(name: str) -> str:
-    path = shutil.which(name)
+    path = resolve_tool(name)
     if path is None:
         raise BuildError(
             f"Could not find '{name}' in PATH. Install Node.js/npm and Rust/Tauri requirements, "
@@ -132,7 +165,7 @@ def preflight(
     found_paths = {
         tool.name: path
         for tool in REQUIRED_TOOLS
-        if (path := tool_lookup(tool.name)) is not None
+        if (path := resolve_tool(tool.name, tool_lookup=tool_lookup)) is not None
     }
     return PreflightResult(required_tools=REQUIRED_TOOLS, found_paths=found_paths)
 
@@ -243,6 +276,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--preflight", action="store_true", help="Check system build requirements and exit.")
     parser.add_argument("--bootstrap", action="store_true", help="Install missing system build tools with winget and exit.")
     parser.add_argument("--yes", action="store_true", help="Accept winget source/package agreements during bootstrap.")
+    parser.add_argument(
+        "--updater-artifacts",
+        action="store_true",
+        help="Create signed updater artifacts. Requires TAURI_SIGNING_PRIVATE_KEY.",
+    )
     parser.add_argument("--dist", default="dist-exe", help="Output directory for copied EXE artifacts.")
     return parser.parse_args(argv)
 
@@ -281,12 +319,14 @@ def main(argv: list[str] | None = None) -> int:
         if not args.dry_run and not preflight_result.ok:
             raise BuildError(preflight_result.summary())
 
-        npm_command = (shutil.which("npm") or "npm") if args.dry_run else ensure_tool("npm")
+        npm_command = (resolve_tool("npm") or "npm") if args.dry_run else ensure_tool("npm")
+        tauri_config = None if args.updater_artifacts else write_local_tauri_config(root)
         env = build_environment(root)
         commands = plan_commands(
             root,
             skip_install=args.skip_install,
             npm_command=npm_command,
+            tauri_config=tauri_config,
         )
 
         if args.dry_run:

@@ -14,7 +14,7 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn write_log(level: String, message: String) -> Result<(), String> {
-    append_project_log(&level, &message).map_err(|e| e.to_string())
+    discard_log_path(append_project_log(&level, &message))
 }
 
 #[tauri::command]
@@ -122,6 +122,10 @@ fn command_error<E: ToString>(context: &str, error: E) -> String {
 
 fn append_project_log(level: &str, message: &str) -> io::Result<PathBuf> {
     append_log_line(&resolve_project_log_dir(), level, message)
+}
+
+fn discard_log_path(result: io::Result<PathBuf>) -> Result<(), String> {
+    result.map(|_| ()).map_err(|e| e.to_string())
 }
 
 fn append_log_line(log_dir: &Path, level: &str, message: &str) -> io::Result<PathBuf> {
@@ -289,5 +293,13 @@ mod tests {
         let contents = fs::read_to_string(path).expect("failed to read log file");
         assert!(contents.contains("[ERROR] example exception"));
         fs::remove_dir_all(log_dir).expect("failed to remove log directory");
+    }
+
+    #[test]
+    fn write_log_command_discards_log_file_path() {
+        let result: Result<(), String> =
+            discard_log_path(Ok(PathBuf::from("shinden-client.log")));
+
+        assert_eq!(result, Ok(()));
     }
 }

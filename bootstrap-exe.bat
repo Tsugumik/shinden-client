@@ -2,5 +2,5 @@
 setlocal
 cd /d "%~dp0"
 
-call generator_exe.bat %*
+call generator_exe.bat --force-bootstrap %*
 exit /b %ERRORLEVEL%
