@@ -46,6 +46,7 @@
     let draftExcludeAiSubtitles = $state(false);
     let refreshStatus: WatchingCacheRefreshStatus = $state({ ...emptyRefreshStatus });
     let lastSeenRefreshed = $state(0);
+    let lastSeenRefreshFinishedAtMs: number | null = $state(null);
     let refreshStatusInitialized = $state(false);
     let silentReloadInProgress = $state(false);
 
@@ -116,15 +117,22 @@
             if (!refreshStatusInitialized) {
                 refreshStatusInitialized = true;
                 lastSeenRefreshed = nextStatus.refreshed;
+                lastSeenRefreshFinishedAtMs = nextStatus.lastFinishedAtMs;
                 return;
             }
 
-            const cacheHasNewData = nextStatus.refreshed > lastSeenRefreshed;
+            const finishedRefreshHasNewData =
+                nextStatus.lastFinishedAtMs !== null &&
+                nextStatus.lastFinishedAtMs !== lastSeenRefreshFinishedAtMs;
+            const cacheHasNewData =
+                nextStatus.refreshed > lastSeenRefreshed || finishedRefreshHasNewData;
             if (cacheHasNewData && !silentReloadInProgress) {
                 lastSeenRefreshed = nextStatus.refreshed;
+                lastSeenRefreshFinishedAtMs = nextStatus.lastFinishedAtMs;
                 await loadWatchingAnime(false);
             } else if (!nextStatus.running) {
                 lastSeenRefreshed = nextStatus.refreshed;
+                lastSeenRefreshFinishedAtMs = nextStatus.lastFinishedAtMs;
             }
         } catch (e) {
             log(LogLevel.ERROR, `Error loading watchlist refresh status: ${e}`);
@@ -157,6 +165,7 @@
             );
             refreshStatus = summary.status;
             lastSeenRefreshed = summary.status.refreshed;
+            lastSeenRefreshFinishedAtMs = summary.status.lastFinishedAtMs;
 
             if (!summary.alreadyRunning) {
                 await loadWatchingAnime(false);

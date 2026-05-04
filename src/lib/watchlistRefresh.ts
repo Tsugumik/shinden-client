@@ -2,6 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 
 export const watchlistSettingsStorageKey = "shinden-watchlist-settings";
 export const watchlistAutoRefreshMs = 15 * 60 * 1000;
+export const watchlistPostProgressRefreshDelayMs = 1500;
 
 export type WatchlistRefreshFilter = {
     onlyAvailableUnwatched: boolean;
@@ -35,6 +36,7 @@ const defaultWatchlistRefreshFilter: WatchlistRefreshFilter = {
 };
 
 let stopBackgroundRefresh: (() => void) | null = null;
+const queuedTitleRefreshTimers = new Map<number, ReturnType<typeof window.setTimeout>>();
 
 export function loadWatchlistRefreshFilter(): WatchlistRefreshFilter {
     if (typeof localStorage === "undefined") {
@@ -69,6 +71,39 @@ export async function refreshWatchingCacheFromStoredSettings(force = false) {
         filter: loadWatchlistRefreshFilter(),
         force,
     });
+}
+
+export async function refreshWatchingCacheTitleFromStoredSettings(
+    titleId: number,
+    force = true,
+) {
+    return invoke<WatchingCacheRefreshSummary>("refresh_watching_anime_cache_item", {
+        titleId,
+        filter: loadWatchlistRefreshFilter(),
+        force,
+    });
+}
+
+export function queueWatchingCacheTitleRefreshFromStoredSettings(
+    titleId: number,
+    delayMs = watchlistPostProgressRefreshDelayMs,
+) {
+    if (typeof window === "undefined") {
+        void refreshWatchingCacheTitleFromStoredSettings(titleId).catch(() => {});
+        return;
+    }
+
+    const queuedTimer = queuedTitleRefreshTimers.get(titleId);
+    if (queuedTimer) {
+        window.clearTimeout(queuedTimer);
+    }
+
+    const timer = window.setTimeout(() => {
+        queuedTitleRefreshTimers.delete(titleId);
+        void refreshWatchingCacheTitleFromStoredSettings(titleId).catch(() => {});
+    }, delayMs);
+
+    queuedTitleRefreshTimers.set(titleId, timer);
 }
 
 export function startWatchlistBackgroundRefresh() {
