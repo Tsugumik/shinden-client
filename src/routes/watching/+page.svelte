@@ -6,6 +6,7 @@
     import * as dashjs from "dashjs";
     import { goto } from "$app/navigation";
     import { formatShindenCreatedTime } from "$lib/shindenProgress";
+    import { queueWatchingCacheTitleRefreshFromStoredSettings } from "$lib/watchlistRefresh";
     import type { EpisodeProgress } from "$lib/types";
 
     let isBuiltIn: boolean = $state(false);
@@ -64,12 +65,13 @@
 
     async function markCurrentEpisodeWatched() {
         const episode = currentEpisode();
-        if (!episode || !params.titleId || !episode.episodeId || episode.watched) {
+        const titleId = params.titleId;
+        if (!episode || !titleId || !episode.episodeId || episode.watched) {
             return;
         }
 
         await invoke("mark_episode_watched", {
-            titleId: params.titleId,
+            titleId,
             episodeId: episode.episodeId,
             createdTime: formatShindenCreatedTime(new Date()),
         });
@@ -77,6 +79,7 @@
         episode.watched = true;
         episode.viewCount = Math.max(episode.viewCount, 1);
         params.episodeProgress = [...params.episodeProgress];
+        queueWatchingCacheTitleRefreshFromStoredSettings(titleId);
     }
 
     async function handlePrimaryProgressAction() {

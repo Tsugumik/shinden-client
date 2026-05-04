@@ -7,6 +7,7 @@
     import {goto} from "$app/navigation";
     import Empty from "$lib/Empty.svelte";
     import { formatShindenCreatedTime, titleIdFromSeriesUrl } from "$lib/shindenProgress";
+    import { queueWatchingCacheTitleRefreshFromStoredSettings } from "$lib/watchlistRefresh";
 
     let episodes: EpisodeProgress[] = $state([]);
     let watchedUpdateInProgress: number | null = $state(null);
@@ -39,14 +40,15 @@
     }
 
     async function setEpisodeWatched(episode: EpisodeProgress, watched: boolean) {
-        if (!params.titleId || !episode.episodeId || episode.watched === watched) {
+        const titleId = params.titleId;
+        if (!titleId || !episode.episodeId || episode.watched === watched) {
             return;
         }
 
         try {
             watchedUpdateInProgress = episode.episodeId;
             await invoke(watched ? "mark_episode_watched" : "mark_episode_unwatched", {
-                titleId: params.titleId,
+                titleId,
                 episodeId: episode.episodeId,
                 createdTime: formatShindenCreatedTime(new Date()),
             });
@@ -55,6 +57,7 @@
             episode.viewCount = watched ? Math.max(episode.viewCount, 1) : 0;
             episodes = [...episodes];
             params.episodeProgress = episodes;
+            queueWatchingCacheTitleRefreshFromStoredSettings(titleId);
             log(LogLevel.SUCCESS, watched
                 ? `Oznaczono odcinek ${episode.episodeNo} jako obejrzany`
                 : `Odznaczono odcinek ${episode.episodeNo} jako obejrzany`);
