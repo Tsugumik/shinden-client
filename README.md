@@ -1,8 +1,3 @@
-⚠️ DEPRECATED / PROJECT SUSPENDED ⚠️
-This project is no longer maintained or actively developed. The repository has been archived and remains available in a read-only state.
-
----
-
 # Shinden Client 4
 
 Aplikacja desktopowa dla użytkowników serwisu Shinden.pl. Zbudowana przy użyciu frameworka Tauri (Rust + SvelteKit).
