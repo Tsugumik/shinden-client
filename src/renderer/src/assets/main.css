@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@font-face {
+  font-family: Orbitron;
+  font-style: normal;
+  font-display: swap;
+  src: url("./Orbitron-VariableFont_wght.ttf") format("woff2");
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
