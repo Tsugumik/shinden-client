@@ -1,5 +1,7 @@
 # Shinden Client 4
 
+Obecnie trwają prace nad nową wersją aplikacji. Ze względu na problemy z multiplatformowością zdecydowałem się na powrót do frameworka **Electron** oraz przejście ze SvelteKit na **Vue**.
+
 Aplikacja desktopowa dla użytkowników serwisu Shinden.pl. Zbudowana przy użyciu frameworka Tauri (Rust + SvelteKit).
 
 ![logo](./src-tauri/icons/256.png)
